@@ -1,4 +1,24 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, tableCellClasses, styled } from '@mui/material';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
 
 export default function Orders(props) {
     const getInput = (row) => {
@@ -6,8 +26,7 @@ export default function Orders(props) {
     };
 
     const getOutput = (row) => {
-        if (row.dishesDelivered.some(d => d == null))
-        {
+        if (row.dishesDelivered.some(d => d == null)) {
             row.dishesDelivered = row.dishesDelivered.filter(n => n);
             row.dishesDelivered.push('error');
         }
@@ -16,20 +35,20 @@ export default function Orders(props) {
     };
 
     return (
-        <TableContainer component={Paper}>
-            <Table>
+        <TableContainer component={Paper} sx={ props.sx }>
+            <Table sx={{ tableLayout: 'fixed' }}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Input</TableCell>
-                        <TableCell>Output</TableCell>
+                        <StyledTableCell>Input</StyledTableCell>
+                        <StyledTableCell>Output</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {props.rows.map((row) => (
-                        <TableRow key={row.id}>
-                            <TableCell>{getInput(row)}</TableCell>
-                            <TableCell>{getOutput(row)}</TableCell>
-                        </TableRow>
+                        <StyledTableRow key={row.id}>
+                            <StyledTableCell>{getInput(row)}</StyledTableCell>
+                            <StyledTableCell>{getOutput(row)}</StyledTableCell>
+                        </StyledTableRow>
                     ))}
                 </TableBody>
             </Table>

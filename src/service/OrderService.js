@@ -2,17 +2,17 @@ import axios from "axios";
 
 class OrderService {
     async getOrders() {
-        return await axios.get('http://localhost:43241/api/v1.0/orders');
+        return await axios.get('https://localhost:7050/api/v1.0/orders');
     }
 
     async getOrder(id) {
-        return await axios.get(`http://localhost:43241/api/v1.0/orders/${id}`);
+        return await axios.get(`https://localhost:7050/api/v1.0/orders/${id}`);
     }
 
     async addOrder(orderRequest) {
         return await axios({
             method: 'post',
-            url: 'http://localhost:43241/api/v1.0/orders',
+            url: 'https://localhost:7050/api/v1.0/orders',
             data: orderRequest
         });
     }
