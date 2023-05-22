@@ -31,7 +31,24 @@ export default function Orders(props) {
             row.dishesDelivered.push('error');
         }
 
-        return `${row.dishesDelivered.join(', ')}`;
+        const dictionary = {};
+        row.dishesDelivered.forEach((dish) => {
+            if (dictionary[dish])
+                dictionary[dish]++;
+            else
+                dictionary[dish] = 1;
+        });
+
+        const dishes = [];
+        for (const [dish, repetitions] of Object.entries(dictionary)) {
+            let repetitionsText = "";
+            if (repetitions > 1)
+                repetitionsText = `(x${repetitions})`;
+
+            dishes.push(`${dish}${repetitionsText}`);
+        }
+
+        return `${dishes.join(', ')}`;
     };
 
     return (

@@ -4,7 +4,7 @@ import { Button, TextField, Box, Typography, Container, Snackbar, Alert } from '
 import { v4 as uuidv4 } from 'uuid';
 import Orders from '../components/restaurantOrderPage/Orders';
 import Copyright from '../components/shared/Copyright';
-import OrderService from '../service/OrderService';
+import orderService from '../service/OrderService';
 
 export default function RestaurantOrderPage() {
     const [persistedOrders, setPersistedOrders] = useState([]);
@@ -14,7 +14,7 @@ export default function RestaurantOrderPage() {
 
     useEffect(() => {
         (async () => {
-            setPersistedOrders((await OrderService.getOrders()).data);
+            setPersistedOrders((await orderService.getOrders()).data);
         })();
     }, []);
 
@@ -45,8 +45,8 @@ export default function RestaurantOrderPage() {
             dishTypeIds: orderInfo.map(Number)
         };
 
-        await OrderService.addOrder(orderRequest);
-        const persistedOrder = (await OrderService.getOrder(orderRequest.id)).data;
+        await orderService.addOrder(orderRequest);
+        const persistedOrder = (await orderService.getOrder(orderRequest.id)).data;
 
         setPersistedOrders(persistedOrder.concat(persistedOrders));
     };
